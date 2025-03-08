@@ -1,12 +1,15 @@
-# Importar yacc
 from ply import yacc
 from lexer import tokens
 
-# -------------------
-# ANALIZADOR SINTÁCTICO
-# -------------------
+# ----------------------
+# ANALIZADOR SINTÁCTICO|
+# ----------------------
+# El analizador sintáctico toma los tokens generados por el léxico y verifica si siguen la estructura 
+# gramatical definida por un lenguaje (C en este caso), organizándolos en una estructura jerárquica 
+# o árbol de sintaxis. Los organiza y valida de acuerdo a las reglas gramaticas y de producción
+# definidas del lenguaje.
 
-# Precedencias para los operadores
+# Precedencias para los operadores aritméticos
 precedence = (
     ('left', 'SUMA', 'RESTA'),
     ('left', 'PRODUCTO', 'DIVISION', 'MODULO'),
@@ -14,6 +17,7 @@ precedence = (
 
 # Reglas de producción
 
+# Programa inicial
 def p_programa(p):
     '''
     programa : lista_declarativas inicio
@@ -41,7 +45,7 @@ def p_declarativa(p):
     '''
     p[0] = f"declarativa → {p[1]}"
 
-# Inclusion de biblioteca
+# Inclusión de biblioteca
 def p_inclusion(p):
     '''
     inclusion : INCLUIR BIBLIOTECA
@@ -59,17 +63,13 @@ def p_inicio(p):
     else:
         p[0] = f"inicio → {p[1]} {p[2]} ( ) {p[5]}"
 
-# Bloque de código
+# Bloques de código
 def p_bloque(p):
     '''
-    bloque : LLAVE_IZQ lista_instrucciones retorno LLAVE_DER 
-           | LLAVE_IZQ lista_instrucciones LLAVE_DER
-           | LLAVE_IZQ retorno LLAVE_DER
+    bloque : LLAVE_IZQ lista_instrucciones LLAVE_DER 
            | LLAVE_IZQ LLAVE_DER
     '''
-    if len(p) == 5:
-        p[0] = f"bloque → {{ {p[2]} {p[3]} }}"
-    elif len(p) == 4:
+    if len(p) == 4:
         p[0] = f"bloque → {{ {p[2]} }}"
     else:
         p[0] = "bloque → { }"
@@ -89,6 +89,7 @@ def p_instruccion(p):
     '''
     instruccion : declaracion
                 | sentencia
+                | declarativa
                 | estructura_de_control
     '''
     p[0] = f"instruccion → {p[1]}"
@@ -312,15 +313,23 @@ def p_iteracion(p):
 def p_error(p):
     if p:
         print(f"Error de sintaxis en la entrada. Token inesperado: {p.value} en la línea {p.lineno}")
-        print(f"Contexto: {p.lexer.lexdata[p.lexpos-20:p.lexpos+20]}")  # Muestra el contexto del error
+        print(f"Contexto alrededor del error: {p.lexer.lexdata[p.lexpos-20:p.lexpos+20]}")  # Muestra el contexto del error
     else:
         print("Error de sintaxis en la entrada. Final inesperado.")
 
 # Construcción del parser
 parser = yacc.yacc(debug=True)
 
+# Función para probar el analizador sintáctico
+def test_analizador_sintactico(codigo):
+    res = parser.parse(codigo)
+    if res:
+        print(f"La sintaxis es correcta. El resultado del análisis sintáctico es:\n{res}")
+    else:
+        print("La sintaxis no es correcta. El análisis sintáctico no tuvo éxito.")
+
 # Código de prueba en C
-codigo_prueba = '''
+codigo_a_analizar = '''
 #include <stdio.h>
 
 int main() {
@@ -346,12 +355,5 @@ int main() {
 }
 '''
 
-# Analizar la cadena de entrada
-result = parser.parse(codigo_prueba)
-
-# Imprimir el resultado del análisis sintactico
-if result:
-    print("\n\n") 
-    print("El resultado del análisis es: \n\n" + result)
-else:
-    print("El análisis no tuvo éxito.")
+# Ejecutar el parser con el código de prueba
+test_analizador_sintactico(codigo_a_analizar)
