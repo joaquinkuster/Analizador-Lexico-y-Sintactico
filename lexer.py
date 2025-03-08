@@ -1,4 +1,4 @@
-from ply import lex, yacc
+from ply import lex
 
 # -------------------
 # ANALIZADOR LÉXICO
@@ -8,7 +8,7 @@ from ply import lex, yacc
 
 tokens = (
     # Palabras reservadas
-    'PRINCIPAL', 'INCLUIR', 'BIBLIOTECA'
+    'PRINCIPAL', 'INCLUIR', 'BIBLIOTECA',
     
     # Estructuras de control y funciones
     'SI', # if
@@ -71,9 +71,9 @@ tokens = (
 # Expresiones regulares para los tokens
 t_NUMERO = r'\d+(\.\d+)?'
 t_CADENA = r'\"(\\.|[^\\"])*\"'
-t_CARACTER = r"\'([^\\]|\\.)\'"
 
 t_BIBLIOTECA = r'(<stdio.h>)'
+t_INCLUIR = r'(\#include)'
 
 t_SUMA = r'\+'
 t_RESTA = r'-'
@@ -83,11 +83,11 @@ t_MODULO = r'%'
 
 t_ASIGNACION = r'='
 t_IGUAL_QUE = r'=='
-t_DIFERENTE = r'!='
-t_MENOR = r'<'
-t_MENOR_IGUAL = r'<='
-t_MAYOR = r'>'
-t_MAYOR_IGUAL = r'>='
+t_DIFERENTE_QUE = r'!='
+t_MENOR_QUE = r'<'
+t_MENOR_IGUAL_QUE = r'<='
+t_MAYOR_QUE = r'>'
+t_MAYOR_IGUAL_QUE = r'>='
 t_Y_LOGICO = r'&&'
 t_O_LOGICO = r'\|\|'
 t_NEGACION = r'!'
@@ -109,7 +109,7 @@ t_REFERENCIA = r'&'
 # Palabras reservadas y su asignación a tokens
 reservadas = {    
     # Palabras reservadas
-    'main': 'PRINCIPAL', '#include': 'INCLUIR',
+    'main': 'PRINCIPAL',
               
     # Estructuras de control
     'if': 'SI', 'else': 'SI_NO', 'while': 'MIENTRAS', 'for': 'PARA', 'do': 'HACER',
@@ -131,6 +131,10 @@ def t_IDENTIFICADOR(t):
     t.type = reservadas.get(t.value, 'IDENTIFICADOR')  # Si es una palabra reservada, se le asigna a una palabra en especial del Tokens
     return t
 
+def t_ENTERO(t):
+    r'int'
+    return t
+
 # Maneja los saltos de línea y actualiza el número de línea del lexer
 def t_newline(t):
     r'\n+'
@@ -146,16 +150,14 @@ def t_error(t):
 
 lexer = lex.lex()
 
-def test_lexer(code):
-    lexer.input(code)
-    while True:
-        tok = lexer.token()
-        if not tok:
-            break
-        print(f"Token({tok.type}, '{tok.value}', {tok.lineno}, {tok.lexpos})")
+def test_analizador_lexico(codigo):
+    lexer.input(codigo)
+    # Iterar sobre los tokens encontrados para imprimir el analisis lexico
+    for token in lexer:
+        print(f'Token: {token.type}, Valor: {token.value}, Línea: {token.lineno}')
 
 # Código de prueba en C
-test_code = '''
+codigo_prueba = '''
 #include <stdio.h>
 
 int main() {
@@ -182,4 +184,4 @@ int main() {
 '''
 
 # Ejecutar el lexer con el código de prueba
-test_lexer(test_code)
+test_analizador_lexico(codigo_prueba)
