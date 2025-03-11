@@ -1,5 +1,5 @@
 from ply import yacc
-from lexer import tokens
+from analizador_lexico import tokens
 
 # ----------------------
 # ANALIZADOR SINTÁCTICO|
@@ -89,7 +89,6 @@ def p_instruccion(p):
     '''
     instruccion : declaracion
                 | sentencia
-                | declarativa
                 | estructura_de_control
     '''
     p[0] = f"instruccion → {p[1]}"
@@ -131,8 +130,12 @@ def p_lista_identificadores(p):
 def p_prototipo_funcion(p):
     '''
     prototipo_funcion : tipo IDENTIFICADOR PARENTESIS_IZQ lista_parametros PARENTESIS_DER
+                      | tipo IDENTIFICADOR PARENTESIS_IZQ PARENTESIS_DER
     '''
-    p[0] = f"prototipo_funcion → {p[1]} {p[2]} ( {p[4]} )"
+    if len(p) == 6:
+        p[0] = f"prototipo_funcion → {p[1]} {p[2]} ( {p[4]} )"
+    else:
+        p[0] = f"prototipo_funcion → {p[1]} {p[2]} ( )"
 
 # Declaración de funciones generales
 def p_definicion_funcion(p):
@@ -147,7 +150,7 @@ def p_definicion_funcion(p):
 
 def p_lista_parametros(p):
     '''
-    lista_parametros : lista_parametros COMA parametro
+    lista_parametros : parametro COMA lista_parametros
                      | parametro
                      | VACIO
     '''
@@ -241,7 +244,7 @@ def p_llamado_a_funcion(p):
 
 def p_lista_argumentos(p):
     '''
-    lista_argumentos : lista_argumentos COMA argumento
+    lista_argumentos : argumento COMA lista_argumentos
                      | argumento
                      | VACIO
     '''
@@ -322,11 +325,14 @@ parser = yacc.yacc(debug=True)
 
 # Función para probar el analizador sintáctico
 def test_analizador_sintactico(codigo):
-    res = parser.parse(codigo)
-    if res:
-        print(f"La sintaxis es correcta. El resultado del análisis sintáctico es:\n{res}")
-    else:
-        print("La sintaxis no es correcta. El análisis sintáctico no tuvo éxito.")
+    try:
+        res_produccion = parser.parse(codigo)
+        if res_produccion:
+            print(f"\nLa sintaxis es correcta. El resultado del análisis sintáctico es:\n\n{res_produccion}")
+        else:
+            print("La sintaxis no es correcta. El análisis sintáctico no tuvo éxito.")
+    except Exception as e:
+        print(f"Error durante el análisis sintáctico: {e}")
 
 # Código de prueba en C
 codigo_a_analizar = '''

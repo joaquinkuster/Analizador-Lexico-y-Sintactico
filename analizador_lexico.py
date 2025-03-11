@@ -121,11 +121,14 @@ lexer = lex.lex()
 
 # Función para probar el analizador léxico
 def test_analizador_lexico(codigo):
-    lexer.input(codigo)
-    print(f"El resultado del análisis léxico es:\n")
-    for token in lexer:
-        print(f'Token: {token.type}, Valor: {token.value}, Línea: {token.lineno}')
-
+    try:
+        lexer.input(codigo)
+        print(f"\nEl resultado del análisis léxico es:\n")
+        for token in lexer:
+            print(f'Token: {token.type}, Valor: {token.value}, Línea: {token.lineno}')
+    except Exception as e:
+        print(f"Error durante el análisis léxico: {e}")
+        
 # Código de prueba en C
 codigo_a_analizar = '''
 #include <stdio.h>

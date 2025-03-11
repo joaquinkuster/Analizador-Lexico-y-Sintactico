@@ -1,0 +1,214 @@
+El árbol de descomposición gramatical es:
+
+programa
+    lista_declarativas
+        declarativa
+            inclusion
+                INCLUIR: #include
+                BIBLIOTECA: <stdio.h>
+        lista_declarativas
+            declarativa
+                inclusion
+                    INCLUIR: #include
+                    BIBLIOTECA: <math.h>
+    inicio
+        ENTERO: int
+        PRINCIPAL: main
+        PARENTESIS_IZQ: (
+        PARENTESIS_DER: )
+        bloque
+            LLAVE_IZQ: {
+            lista_instrucciones
+                instruccion
+                    declaracion
+                        declaracion_variable
+                            tipo
+                                ENTERO: int
+                            lista_identificadores
+                                IDENTIFICADOR: n
+                                COMA: ,
+                                lista_identificadores
+                                    IDENTIFICADOR: a
+                                    ASIGNACION: =
+                                    expresion
+                                        NUMERO: 0
+                                    COMA: ,
+                                    lista_identificadores
+                                        IDENTIFICADOR: b
+                                        ASIGNACION: =
+                                        expresion
+                                            NUMERO: 1
+                                        COMA: ,
+                                        lista_identificadores
+                                            IDENTIFICADOR: siguiente
+                        PUNTO_Y_COMA: ;
+                lista_instrucciones
+                    instruccion
+                        estructura_de_control
+                            iteracion
+                                HACER: do
+                                bloque
+                                    LLAVE_IZQ: {
+                                    lista_instrucciones
+                                        instruccion
+                                            sentencia
+                                                llamado_a_funcion
+                                                    IMPRIMIR: printf
+                                                    PARENTESIS_IZQ: (
+                                                    lista_argumentos
+                                                        argumento
+                                                            CADENA: "Digite la cantidad de términos de la secuencia de Fibonacci: "
+                                                    PARENTESIS_DER: )
+                                                PUNTO_Y_COMA: ;
+                                        lista_instrucciones
+                                            instruccion
+                                                sentencia
+                                                    llamado_a_funcion
+                                                        ESCRIBIR: scanf
+                                                        PARENTESIS_IZQ: (
+                                                        lista_argumentos
+                                                            argumento
+                                                                CADENA: "%d"
+                                                            COMA: ,
+                                                            lista_argumentos
+                                                                argumento
+                                                                    referencia
+                                                                        REFERENCIA: &
+                                                                        IDENTIFICADOR: n
+                                                        PARENTESIS_DER: )
+                                                    PUNTO_Y_COMA: ;
+                                            lista_instrucciones
+                                                instruccion
+                                                    estructura_de_control
+                                                        seleccion
+                                                            SI: if
+                                                            PARENTESIS_IZQ: (
+                                                            condicion
+                                                                expresion
+                                                                    IDENTIFICADOR: n
+                                                                MENOR_IGUAL_QUE: <=
+                                                                expresion
+                                                                    NUMERO: 0
+                                                            PARENTESIS_DER: )
+                                                            bloque
+                                                                LLAVE_IZQ: {
+                                                                lista_instrucciones
+                                                                    instruccion
+                                                                        sentencia
+                                                                            llamado_a_funcion
+                                                                                IMPRIMIR: printf
+                                                                                PARENTESIS_IZQ: (
+                                                                                lista_argumentos
+                                                                                    argumento
+                                                                                        CADENA: "Por favor, ingresa un número mayor que 0.
+"
+                                                                                PARENTESIS_DER: )
+                                                                            PUNTO_Y_COMA: ;
+                                                                LLAVE_DER: }
+                                    LLAVE_DER: }
+                                MIENTRAS: while
+                                PARENTESIS_IZQ: (
+                                condicion
+                                    expresion
+                                        IDENTIFICADOR: n
+                                    MENOR_IGUAL_QUE: <=
+                                    expresion
+                                        NUMERO: 0
+                                PARENTESIS_DER: )
+                                PUNTO_Y_COMA: ;
+                    lista_instrucciones
+                        instruccion
+                            sentencia
+                                llamado_a_funcion
+                                    IMPRIMIR: printf
+                                    PARENTESIS_IZQ: (
+                                    lista_argumentos
+                                        argumento
+                                            CADENA: "Secuencia de Fibonacci: "
+                                    PARENTESIS_DER: )
+                                PUNTO_Y_COMA: ;
+                        lista_instrucciones
+                            instruccion
+                                estructura_de_control
+                                    iteracion
+                                        PARA: for
+                                        PARENTESIS_IZQ: (
+                                        declaracion_variable
+                                            tipo
+                                                ENTERO: int
+                                            lista_identificadores
+                                                IDENTIFICADOR: i
+                                                ASIGNACION: =
+                                                expresion
+                                                    NUMERO: 1
+                                        PUNTO_Y_COMA: ;
+                                        condicion
+                                            expresion
+                                                IDENTIFICADOR: i
+                                            MENOR_IGUAL_QUE: <=
+                                            expresion
+                                                IDENTIFICADOR: n
+                                        PUNTO_Y_COMA: ;
+                                        asignacion
+                                            IDENTIFICADOR: i
+                                            INCREMENTO: ++
+                                        PARENTESIS_DER: )
+                                        bloque
+                                            LLAVE_IZQ: {
+                                            lista_instrucciones
+                                                instruccion
+                                                    sentencia
+                                                        llamado_a_funcion
+                                                            IMPRIMIR: printf
+                                                            PARENTESIS_IZQ: (
+                                                            lista_argumentos
+                                                                argumento
+                                                                    CADENA: "%d "
+                                                                COMA: ,
+                                                                lista_argumentos
+                                                                    argumento
+                                                                        expresion
+                                                                            IDENTIFICADOR: a
+                                                            PARENTESIS_DER: )
+                                                        PUNTO_Y_COMA: ;
+                                                lista_instrucciones
+                                                    instruccion
+                                                        sentencia
+                                                            asignacion
+                                                                IDENTIFICADOR: siguiente
+                                                                ASIGNACION: =
+                                                                expresion
+                                                                    expresion
+                                                                        IDENTIFICADOR: a
+                                                                    SUMA: +
+                                                                    expresion
+                                                                        IDENTIFICADOR: b
+                                                            PUNTO_Y_COMA: ;
+                                                    lista_instrucciones
+                                                        instruccion
+                                                            sentencia
+                                                                asignacion
+                                                                    IDENTIFICADOR: a
+                                                                    ASIGNACION: =
+                                                                    expresion
+                                                                        IDENTIFICADOR: b
+                                                                PUNTO_Y_COMA: ;
+                                                        lista_instrucciones
+                                                            instruccion
+                                                                sentencia
+                                                                    asignacion
+                                                                        IDENTIFICADOR: b
+                                                                        ASIGNACION: =
+                                                                        expresion
+                                                                            IDENTIFICADOR: siguiente
+                                                                    PUNTO_Y_COMA: ;
+                                            LLAVE_DER: }
+                            lista_instrucciones
+                                instruccion
+                                    sentencia
+                                        retorno
+                                            RETORNAR: return
+                                            expresion
+                                                NUMERO: 0
+                                        PUNTO_Y_COMA: ;
+            LLAVE_DER: }
