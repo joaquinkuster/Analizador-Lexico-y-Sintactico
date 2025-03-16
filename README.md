@@ -2,7 +2,7 @@
 
 ## Integrantes
 
-- **Joaquín Kuster** (joaquinkuster3000@gmail.com)
+- **Joaquín Küster** (joaquinkuster3000@gmail.com)
 
 ---
 
