@@ -110,7 +110,7 @@ Esta sección define las expresiones regulares utilizadas para reconocer cada un
 | **VACIO**         | `r'void'`                     |
 | **IDENTIFICADOR** | `r'[a-zA-Z_][a-zA-Z_0-9]*'`   |
 | **NUMERO**        | `r'\d+(\.\d+)?'`              |
-| **CADENA**        | `r'\"(\\.|[^\\"])*\"'`        |
+| **CADENA**        | `r'\"(\\.\|[^\\"])*\"'`       |
 | **SUMA**          | `r'\+'`                       |
 | **RESTA**         | `r'-'`                        |
 | **PRODUCTO**      | `r'\*'`                       |
